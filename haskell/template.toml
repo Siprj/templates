@@ -13,6 +13,7 @@ templates = [ "src/Lib.hs"
             , "CHANGELOG.md"
             , "fourmolu.yaml"
             , "cabal.project"
+            , "cabal.haskell-ci"
             ]
 
 [config]
