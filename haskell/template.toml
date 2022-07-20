@@ -1,0 +1,20 @@
+license = "MIT"
+with_readme = true
+
+[files]
+directories = ["src", "app", "test", "bench"]
+templates = [ "src/Lib.hs"
+            , "{{ project }}.cabal"
+            , "app/Main.hs"
+            , "test/Tests.hs"
+            , "bench/Bench.hs"
+            , ".hlint.yaml"
+            , ".gitignore"
+            , "CHANGELOG.md"
+            , "fourmolu.yaml"
+            , "cabal.project"
+            ]
+
+[config]
+version = "0.1.0"
+version_control = "git"

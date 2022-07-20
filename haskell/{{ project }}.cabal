@@ -1,0 +1,113 @@
+cabal-version: {{ cabal_version }}
+name: {{ project }}
+version: {{ version }}
+-- synopsis:
+-- description:
+category:
+homepage: https://github.com/{{ github_username }}/{{ project }}#readme
+bug-reports: https://github.com/{{ github_username }}/{{ project }}/issues
+author: {{ name }}
+maintainer: {{ email }}
+copyright: Copyright: (c) {{ year }} {{ name }}
+license: {{ license }}
+license-file: LICENSE
+build-type: Simple
+tested-with: GHC==9.2.2 || ==9.2.1
+extra-doc-files: 
+  README.md
+  CHANGELOG.md
+
+source-repository head
+  type: git
+  location: https://github.com/{{ github_username }}/{{ project }}
+
+flag pedantic
+  description: Pass additional warning flags and -Werror to GHC.
+  manual: True
+  default: True
+
+common common-stanza
+  default-language: GHC2021
+  default-extensions:
+    DataKinds
+    DerivingStrategies
+    DuplicateRecordFields
+    LambdaCase
+    OverloadedLabels
+    OverloadedStrings
+    RecordWildCards
+
+common common-ghc-options
+  if flag(pedantic)
+    ghc-options: -Werror
+
+  ghc-options:
+    -Wall
+    -Wcompat 
+    -Wincomplete-record-updates
+    -Wincomplete-uni-patterns
+    -Wmissing-deriving-strategies
+    -Wmissing-export-lists
+    -Wpartial-fields
+    -Wredundant-constraints
+    -threaded
+    -rtsopts -with-rtsopts=-N
+
+common common-ghc-executable-options
+  ghc-options:
+    -threaded
+    -rtsopts -with-rtsopts=-N
+
+library
+  import: common-stanza
+  import: common-ghc-options
+
+  hs-source-dirs: 
+    src
+
+  exposed-modules: 
+    Lib
+
+  build-depends: 
+      base
+
+test-suite {{ project }}-test
+  import: common-stanza
+  import: common-ghc-options
+  import: common-ghc-executable-options
+
+  type: exitcode-stdio-1.0
+  hs-source-dirs: test
+  main-is: Tests.hs
+
+  build-depends:
+      base
+    , {{ project }}
+    , tasty
+    , tasty-hunit
+
+benchmark {{ project }}-bench
+  import: common-stanza
+  import: common-ghc-options
+  import: common-ghc-executable-options
+
+  type: exitcode-stdio-1.0
+  hs-source-dirs: bench
+  main-is: Bench.hs
+
+  build-depends: 
+      base
+    , {{ project }}
+    , criterion
+
+executable {{ project }}
+  import: common-stanza
+  import: common-ghc-options
+  import: common-ghc-executable-options
+
+  hs-source-dirs: app
+  main-is: Main.hs
+
+  build-depends: 
+      base
+    , {{ project }}
