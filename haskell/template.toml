@@ -2,7 +2,7 @@ license = "MIT"
 with_readme = true
 
 [files]
-directories = ["src", "app", "test", "bench"]
+directories = ["src", "app", "test", "bench", ".github", ".github/workflows"]
 templates = [ "src/Lib.hs"
             , "{{ project }}.cabal"
             , "app/Main.hs"
@@ -14,6 +14,7 @@ templates = [ "src/Lib.hs"
             , "fourmolu.yaml"
             , "cabal.project"
             , "cabal.haskell-ci"
+            , ".github/workflows/formatting-linting.yml"
             ]
 
 [config]
